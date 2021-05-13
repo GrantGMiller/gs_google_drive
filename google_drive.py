@@ -38,7 +38,7 @@ class GoogleDrive:
             url='https://www.googleapis.com/upload/drive/v3/files?uploadType=media',
             data=File(src, 'rb'),
             headers={
-                'Content-Type': mimetypes.guess_type(src),
+                'Content-Type': mimetypes.guess_type(src)[0],
             },
         )
         print('resp.text=', resp.text)
