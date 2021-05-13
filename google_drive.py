@@ -4,23 +4,15 @@ except:
     print('importing gs_requests as requests')
     import gs_requests as requests
 
-#import mimetypes  # blocked by Global Scripter
-from pathlib import Path
+try:
+    import mimetypes
+except:
+    import gs_mimetypes as mimetypes
+try:
+    from pathlib import Path
+except:
+    from gs_pathlib import Path
 from extronlib.system import File
-
-
-def GuessMimeType(src):
-    return {
-        '.png': 'image/png',
-        '.jpg': 'image/jpeg',
-        '.gif': 'image/gif',
-        '.ico': 'image/x-icon',
-        '.jfif': 'image/jpeg',
-        '.jpeg': 'image/jpeg',
-        '.txt': 'text/plain',
-        '.py': 'text/plain',
-        '.mp4': 'video/mp4',
-    }[Path(src).suffix.lower()]
 
 
 class GoogleDrive:
@@ -46,7 +38,7 @@ class GoogleDrive:
             url='https://www.googleapis.com/upload/drive/v3/files?uploadType=media',
             data=File(src, 'rb'),
             headers={
-                'Content-Type': GuessMimeType(src),
+                'Content-Type': mimetypes.guess_type(src),
             },
         )
         print('resp.text=', resp.text)
